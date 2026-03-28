@@ -6,6 +6,9 @@ import 'jumlah_angka_field_screen.dart';
 import 'stopwatch_screen.dart';
 import 'piramid_screen.dart';
 import 'login_screen.dart';
+import 'tanggal_hari_weton_screen.dart';
+import 'hitung_umur_screen.dart';
+import 'konversi_hijriah_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final UserModel loggedInUser;
@@ -17,6 +20,9 @@ class HomeScreen extends StatelessWidget {
     final menuItems = [
       _MenuItem('Penjumlahan & Pengurangan', Icons.calculate, Colors.blue, const PenjumlahanScreen()),
       _MenuItem('Ganjil/Genap & Prima', Icons.filter_1, Colors.orange, const TebakBilanganScreen()),
+      _MenuItem('Tanggal → Hari & Weton', Icons.calendar_today, Colors.teal, const TanggalHariWetonScreen()),
+      _MenuItem('Hitung Umur', Icons.cake, Colors.pink, const HitungUmurScreen()),
+      _MenuItem('Konversi Hijriah', Icons.event, Colors.indigo, const KonversiHijriahScreen()),
       _MenuItem('Jumlah Angka Field', Icons.format_list_numbered, Colors.green, const JumlahAngkaFieldScreen()),
       _MenuItem('Stopwatch', Icons.timer, Colors.red, const StopwatchScreen()),
       _MenuItem('Luas & Volume Piramid', Icons.change_history, Colors.purple, const PiramidScreen()),

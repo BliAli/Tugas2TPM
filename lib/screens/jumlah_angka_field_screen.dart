@@ -10,28 +10,33 @@ class JumlahAngkaFieldScreen extends StatefulWidget {
 class _JumlahAngkaFieldScreenState extends State<JumlahAngkaFieldScreen> {
   final _controller = TextEditingController();
   String _hasil = '';
+  List<String> _angkaDitemukan = [];
 
   void _hitungJumlahAngka() {
     final input = _controller.text.trim();
     if (input.isEmpty) {
-      setState(() => _hasil = 'Masukkan data terlebih dahulu!');
+      setState(() {
+        _hasil = 'Masukkan teks terlebih dahulu!';
+        _angkaDitemukan = [];
+      });
       return;
     }
 
-    // Ambil semua digit dari input
-    final digits = input.replaceAll(RegExp(r'[^0-9]'), '');
-    if (digits.isEmpty) {
-      setState(() => _hasil = 'Tidak ada angka ditemukan!');
-      return;
-    }
+    // Cari semua angka (bukan digit individual) dalam teks
+    final matches = RegExp(r'\d+').allMatches(input);
+    final angkaList = matches.map((m) => m.group(0)!).toList();
 
-    int total = 0;
-    for (var ch in digits.split('')) {
-      total += int.parse(ch);
+    if (angkaList.isEmpty) {
+      setState(() {
+        _hasil = 'Tidak ada angka ditemukan dalam teks!';
+        _angkaDitemukan = [];
+      });
+      return;
     }
 
     setState(() {
-      _hasil = 'Digit: ${digits.split('').join(' + ')} = $total';
+      _angkaDitemukan = angkaList;
+      _hasil = 'Ditemukan ${angkaList.length} angka dalam teks';
     });
   }
 
@@ -48,17 +53,38 @@ class _JumlahAngkaFieldScreenState extends State<JumlahAngkaFieldScreen> {
         title: const Text('Jumlah Angka Field'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(
           children: [
+            Card(
+              color: Colors.blue[50],
+              child: const Padding(
+                padding: EdgeInsets.all(12),
+                child: Row(
+                  children: [
+                    Icon(Icons.info_outline, color: Colors.blue),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        'Masukkan teks yang mengandung angka, lalu hitung berapa banyak angka yang ada di dalamnya.',
+                        style: TextStyle(fontSize: 13),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
             TextField(
               controller: _controller,
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.text,
+              maxLines: 3,
               decoration: InputDecoration(
-                labelText: 'Masukkan angka',
-                hintText: 'Contoh: 12345',
+                labelText: 'Masukkan teks',
+                hintText: 'Contoh: Saya mau makan 4 buah di kamar 12',
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                alignLabelWithHint: true,
               ),
             ),
             const SizedBox(height: 20),
@@ -67,8 +93,8 @@ class _JumlahAngkaFieldScreenState extends State<JumlahAngkaFieldScreen> {
               height: 48,
               child: FilledButton.icon(
                 onPressed: _hitungJumlahAngka,
-                icon: const Icon(Icons.functions),
-                label: const Text('Hitung Jumlah Digit'),
+                icon: const Icon(Icons.search),
+                label: const Text('Hitung Jumlah Angka'),
               ),
             ),
             const SizedBox(height: 32),
@@ -83,9 +109,35 @@ class _JumlahAngkaFieldScreenState extends State<JumlahAngkaFieldScreen> {
                       const SizedBox(height: 8),
                       Text(
                         _hasil,
-                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                       ),
+                      if (_angkaDitemukan.isNotEmpty) ...[
+                        const SizedBox(height: 16),
+                        const Divider(),
+                        const SizedBox(height: 8),
+                        const Text(
+                          'Angka yang ditemukan:',
+                          style: TextStyle(fontSize: 14, color: Colors.grey),
+                        ),
+                        const SizedBox(height: 8),
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: _angkaDitemukan
+                              .map((angka) => Chip(
+                                    label: Text(
+                                      angka,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    backgroundColor: Colors.blue[100],
+                                  ))
+                              .toList(),
+                        ),
+                      ],
                     ],
                   ),
                 ),
