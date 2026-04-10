@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 
 class HitungUmurScreen extends StatefulWidget {
   const HitungUmurScreen({super.key});
@@ -10,13 +9,12 @@ class HitungUmurScreen extends StatefulWidget {
 
 class _HitungUmurScreenState extends State<HitungUmurScreen> {
   DateTime? _selectedDate;
-  Timer? _timer;
   String _hasil = '';
 
   void _selectDate() async {
     final picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now().subtract(const Duration(days: 6570)),
+      initialDate: DateTime.now().subtract(const Duration(days: 6570)), // ~18 tahun
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
     );
@@ -24,17 +22,9 @@ class _HitungUmurScreenState extends State<HitungUmurScreen> {
     if (picked != null) {
       setState(() {
         _selectedDate = picked;
-        _startTimer();
         _hitungUmur();
       });
     }
-  }
-
-  void _startTimer() {
-    _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      _hitungUmur();
-    });
   }
 
   void _hitungUmur() {
@@ -43,50 +33,37 @@ class _HitungUmurScreenState extends State<HitungUmurScreen> {
     final now = DateTime.now();
     final birthDate = _selectedDate!;
 
+    // Hitung tahun bulan hari
     int tahun = now.year - birthDate.year;
     int bulan = now.month - birthDate.month;
     int hari = now.day - birthDate.day;
-    int jam = now.hour - birthDate.hour;
-    int menit = now.minute - birthDate.minute;
-    int detik = now.second - birthDate.second;
 
-    if (detik < 0) {
-      menit--;
-      detik += 60;
-    }
-    if (menit < 0) {
-      jam--;
-      menit += 60;
-    }
-    if (jam < 0) {
-      hari--;
-      jam += 24;
-    }
     if (hari < 0) {
       bulan--;
       final prevMonth = DateTime(now.year, now.month, 0);
       hari += prevMonth.day;
     }
+
     if (bulan < 0) {
       tahun--;
       bulan += 12;
     }
 
+    // Hitung total jam dan menit dari sisa hari
+    final totalMenit = now.difference(birthDate).inMinutes;
+    final totalJam = now.difference(birthDate).inHours;
+    final sisa = totalMenit - (totalJam * 60);
+
     setState(() {
       _hasil =
+          'Umur:\n\n'
           '📅 $tahun tahun\n'
           '📆 $bulan bulan\n'
-          '📊 $hari hari\n'
-          '🕐 $jam jam\n'
-          '⏲️ $menit menit\n'
-          '⏱️ $detik detik';
+          '📊 $hari hari\n\n'
+          '⏱️ Atau setara dengan:\n'
+          '🕐 $totalJam jam\n'
+          '⏲️ $totalMenit menit\n';
     });
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
   }
 
   @override
@@ -114,7 +91,7 @@ class _HitungUmurScreenState extends State<HitungUmurScreen> {
                     SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        'Hitung umur Anda secara real-time dari tanggal lahir hingga sekarang',
+                        'Hitung umur Anda dari tanggal lahir hingga sekarang',
                         style: TextStyle(fontSize: 13),
                       ),
                     ),
@@ -168,7 +145,7 @@ class _HitungUmurScreenState extends State<HitungUmurScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const Text(
-                        'Umur Anda:',
+                        'Hasil Perhitungan:',
                         style: TextStyle(fontSize: 14, color: Colors.grey),
                       ),
                       const SizedBox(height: 20),
