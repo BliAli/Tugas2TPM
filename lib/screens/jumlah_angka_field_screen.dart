@@ -56,25 +56,7 @@ class _JumlahAngkaFieldScreenState extends State<JumlahAngkaFieldScreen> {
         padding: const EdgeInsets.all(24),
         child: Column(
           children: [
-            Card(
-              color: Colors.blue[50],
-              child: const Padding(
-                padding: EdgeInsets.all(12),
-                child: Row(
-                  children: [
-                    Icon(Icons.info_outline, color: Colors.blue),
-                    SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        'Masukkan teks yang mengandung angka, lalu hitung berapa banyak angka yang ada di dalamnya.',
-                        style: TextStyle(fontSize: 13),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
+
             TextField(
               controller: _controller,
               keyboardType: TextInputType.text,

@@ -83,25 +83,7 @@ class _TanggalHariWetonScreenState extends State<TanggalHariWetonScreen> {
         padding: const EdgeInsets.all(24),
         child: Column(
           children: [
-            Card(
-              color: Colors.blue[50],
-              child: const Padding(
-                padding: EdgeInsets.all(12),
-                child: Row(
-                  children: [
-                    Icon(Icons.info_outline, color: Colors.blue),
-                    SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        'Konversi tanggal ke hari (Jawa) dan Weton',
-                        style: TextStyle(fontSize: 13),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 32),
+
             InkWell(
               onTap: _selectDate,
               child: Card(
@@ -180,25 +162,7 @@ class _TanggalHariWetonScreenState extends State<TanggalHariWetonScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  Card(
-                    color: Colors.amber[50],
-                    child: Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Row(
-                        children: [
-                          Icon(Icons.lightbulb_outline, color: Colors.amber[800]),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              'Pasaran berulang setiap 5 hari (Pahing, Pon, Wage, Kliwon, Legi)',
-                              style: TextStyle(fontSize: 12, color: Colors.amber[900]),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+
                 ],
               ),
           ],

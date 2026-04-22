@@ -9,6 +9,7 @@ import 'login_screen.dart';
 import 'tanggal_hari_weton_screen.dart';
 import 'hitung_umur_screen.dart';
 import 'konversi_hijriah_screen.dart';
+import 'konversi_saka_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final UserModel loggedInUser;
@@ -23,6 +24,7 @@ class HomeScreen extends StatelessWidget {
       _MenuItem('Tanggal → Hari & Weton', Icons.calendar_today, Colors.teal, const TanggalHariWetonScreen()),
       _MenuItem('Hitung Umur', Icons.cake, Colors.pink, const HitungUmurScreen()),
       _MenuItem('Konversi Hijriah', Icons.event, Colors.indigo, const KonversiHijriahScreen()),
+      _MenuItem('Konversi Tahun Saka', Icons.auto_awesome, Colors.amber, const KonversiSakaScreen()),
       _MenuItem('Jumlah Angka Field', Icons.format_list_numbered, Colors.green, const JumlahAngkaFieldScreen()),
       _MenuItem('Stopwatch', Icons.timer, Colors.red, const StopwatchScreen()),
       _MenuItem('Luas & Volume Piramid', Icons.change_history, Colors.purple, const PiramidScreen()),

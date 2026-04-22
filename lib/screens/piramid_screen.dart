@@ -72,26 +72,7 @@ class _PiramidScreenState extends State<PiramidScreen> {
         padding: const EdgeInsets.all(24),
         child: Column(
           children: [
-            // Info card
-            Card(
-              color: Colors.purple[50],
-              child: const Padding(
-                padding: EdgeInsets.all(12),
-                child: Row(
-                  children: [
-                    Icon(Icons.info_outline, color: Colors.purple),
-                    SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        'Piramid segi empat (alas persegi)',
-                        style: TextStyle(fontSize: 13),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
+
             TextField(
               controller: _alasController,
               keyboardType: const TextInputType.numberWithOptions(decimal: true),

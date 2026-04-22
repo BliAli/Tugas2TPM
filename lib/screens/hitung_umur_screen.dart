@@ -49,20 +49,14 @@ class _HitungUmurScreenState extends State<HitungUmurScreen> {
       bulan += 12;
     }
 
-    // Hitung total jam dan menit dari sisa hari
-    final totalMenit = now.difference(birthDate).inMinutes;
-    final totalJam = now.difference(birthDate).inHours;
-    final sisa = totalMenit - (totalJam * 60);
+
 
     setState(() {
       _hasil =
           'Umur:\n\n'
           '📅 $tahun tahun\n'
           '📆 $bulan bulan\n'
-          '📊 $hari hari\n\n'
-          '⏱️ Atau setara dengan:\n'
-          '🕐 $totalJam jam\n'
-          '⏲️ $totalMenit menit\n';
+          '📊 $hari hari\n';
     });
   }
 
@@ -81,25 +75,7 @@ class _HitungUmurScreenState extends State<HitungUmurScreen> {
         padding: const EdgeInsets.all(24),
         child: Column(
           children: [
-            Card(
-              color: Colors.orange[50],
-              child: const Padding(
-                padding: EdgeInsets.all(12),
-                child: Row(
-                  children: [
-                    Icon(Icons.info_outline, color: Colors.orange),
-                    SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        'Hitung umur Anda dari tanggal lahir hingga sekarang',
-                        style: TextStyle(fontSize: 13),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
+
             InkWell(
               onTap: _selectDate,
               child: Card(
