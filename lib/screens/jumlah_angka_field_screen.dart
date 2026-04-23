@@ -22,10 +22,11 @@ class _JumlahAngkaFieldScreenState extends State<JumlahAngkaFieldScreen> {
       return;
     }
 
-    // Ambil setiap digit (0-9) secara individual dari teks
-    final digits = input.split('').where((ch) => RegExp(r'\d').hasMatch(ch)).toList();
+    // Cari semua angka (bilangan utuh) dalam teks menggunakan regex \d+
+    final matches = RegExp(r'\d+').allMatches(input);
+    final angkaList = matches.map((m) => m.group(0)!).toList();
 
-    if (digits.isEmpty) {
+    if (angkaList.isEmpty) {
       setState(() {
         _hasil = 'Tidak ada angka ditemukan dalam teks!';
         _angkaDitemukan = [];
@@ -34,8 +35,8 @@ class _JumlahAngkaFieldScreenState extends State<JumlahAngkaFieldScreen> {
     }
 
     setState(() {
-      _angkaDitemukan = digits;
-      _hasil = 'Ditemukan ${digits.length} angka dalam teks';
+      _angkaDitemukan = angkaList;
+      _hasil = 'Ditemukan ${angkaList.length} angka dalam teks';
     });
   }
 
